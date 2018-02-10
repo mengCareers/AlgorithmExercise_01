@@ -1,53 +1,62 @@
-/*
-- Tree diagrams can be used to design backtracking algo.
-- The power of backtracking appears when we combine explicit and implicit constraints, 
-and we stop generating nodes when these checks fail. 
-We can improve the above algorithm by strengthening the constraint checks and presorting the data. 
-By sorting the initial array, we need not to consider rest of the array, once the sum so far is greater than target number. 
-We can backtrack and check other possibilities.
-    Similarly, assume the array is presorted and we found one subset. 
-We can generate next node excluding the present node only when inclusion of next node satisfies the constraints. Given below is optimized implementation (it prunes the subtree if it is not satisfying contraints).
-* Objec­tive: 
-Given a set of positive integers, and a value sum S, find out if there exist a subset in array whose sum is equal to given sum S.
-* Thought Process:
- * 
- */
 package Backtracking;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Queue;
 
 /**
- * 
- * @author xinrong
+ * input: set, int k
+ * output: List<List<Integer>>
+ * TP: generage all subsums, if == k, add to res
+ *     -> try one by one -> backtracking [Systematic Consideration]
+ *     using tree diagrams to design Backtracking
+ *     in diagram, node represents func call
+ *                 branch represents candidate elements
+ *     if the added sum satisfy constraint, we generate child nodes further
+ *     whenever not, we stop further generation & backtrack to previous node to explore its child nodes not yet explored
+ *     breadth by loop | depth by recursion
  */
+
 public class SubsetSum {
-    List<List<Integer>> subsetSum(int[] candidates, int target) {
-        List<List<Integer>> res = new ArrayList<>();
-        if (candidates.length == 0 || candidates == null) 
-            return res;
-        List<Integer> curr = new ArrayList<>();
-        helper(res, curr, candidates, target, 0);
+    
+    public static void main(String[] args) {
+        int weights[] = {10, 7, 5, 18, 12, 20, 15};
+        List<List<Integer>> res = new SubsetSum().getSubSum(weights, 35);
+        System.out.println(res);
+    }
+    
+    List<List<Integer>> res ;
+    List<Integer> cur;
+    
+    List<List<Integer>> getSubSum(int[] arr, int k) {
+        res = new ArrayList<>();
+        cur = new ArrayList<>();
+        backtrack(arr, k, 0);
         return res;
     }
-    private void helper(List<List<Integer>> res, List<Integer> curr, int[] candidates, int target, int start) {
-        if (target < 0) 
-            return;
-        if (target == 0) {
-            res.add(new ArrayList<>(curr));
+    void backtrack(int[] arr, int k, int movei) {
+        
+        if (getSum(cur) == k) {
+            res.add(new ArrayList<>(cur));
             return;
         }
-        for (int i = start; i < candidates.length; i++) {
-            curr.add(candidates[i]);
-            helper(res, curr, candidates, target - candidates[i], i + 1);
-            curr.remove(curr.size() - 1);
+        
+        if (movei == arr.length) 
+            return;
+        
+        for (int i = movei; i < arr.length; i++) { 
+            cur.add(arr[i]);
+            backtrack(arr, k, i + 1);
+            cur.remove(cur.size() - 1);            
         }
+        
     }
-    public static void main(String[] args) {
-        int[] candidates = {1, 2, 3};
-        List<List<Integer>> res = new SubsetSum().subsetSum(candidates, 4);
-        for (List<Integer> lst : res) {
-            System.out.println(lst);
+    
+    int getSum(List<Integer> cur) {
+        int sum = 0;
+        for (int i : cur) {
+            sum += i;
         }
+        return sum;
     }
 }
