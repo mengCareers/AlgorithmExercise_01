@@ -15,8 +15,8 @@ import java.util.Set;
 public class IfExistSubarraywithGivenSum {
 
     public static void main(String[] args) {
-        int[] arr = {1};
-        int target = 0;
+        int[] arr = {1, 3, 5, -2, 6};
+        int target = 4;
         boolean ans = new IfExistSubarraywithGivenSum().isExistSubarrWithNegative(arr, target);
         System.out.println(ans);
     }
@@ -55,6 +55,7 @@ public class IfExistSubarraywithGivenSum {
      * @return True if exists
      */
     public boolean isExistSubarrWithNegative(int[] arr, int target) {
+        
         if (arr == null || arr.length == 0) {
             return false;
         }
