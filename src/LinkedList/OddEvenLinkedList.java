@@ -1,9 +1,7 @@
 /* 328. Odd Even Linked List
 Attention:
-    ep = head;
-    eh = ep;
-    ep = ep.next;
-    eh, head not moving with ep
+    if head == null || head.next == null
+    while (to avoid exception)
  */
 package LinkedList;
 
@@ -15,16 +13,20 @@ public class OddEvenLinkedList {
     public ListNode oddEvenList(ListNode head) {
         if (head == null || head.next == null)
             return head;
-        ListNode op = head, ep = head.next, eh = ep;
-        while (ep != null && ep.next != null) {
-            ListNode ot = op.next.next;
-            ListNode et = ep.next.next;
-            op.next = ot;
-            op = op.next;
-            ep.next = et;
-            ep = ep.next;
+        ListNode o, e, onxt, enxt, s;
+        o = head;
+        e = o.next;
+        s = e;
+        while (e != null && e.next!= null && o != null && o.next != null) {
+            onxt = o.next.next;
+            o.next = onxt;
+            o = onxt;
+            
+            enxt = e.next.next;
+            e.next = enxt;
+            e = enxt;
         }
-        op.next = eh; // eh not moving with ep
+        o.next = s;
         return head;
     }
 }
