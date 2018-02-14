@@ -14,8 +14,8 @@ import java.util.Map;
 public class SubarraySum {
 
     public static void main(String[] args) {
-        int[] arr = {-1, -1, 1};
-        int target = 0;
+        int[] arr = {10 ,3};
+        int target = 3;
         int ans = new SubarraySum().subarraySum(arr, target);
         System.out.println(ans);
     }
@@ -45,7 +45,7 @@ public class SubarraySum {
         int curSum = arr[0], start = 0;
         int res = 0;
         for (int i = 1; i <= arr.length; i++) {
-            while (curSum > target && start < i - 1) {
+            while (curSum > target && start <= i - 1) { // if start < i - 1, then [10, 3] target 3, 10 will not be ignored.
                 curSum -= arr[start];
                 start++;
             }
