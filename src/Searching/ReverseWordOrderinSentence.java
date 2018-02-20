@@ -11,7 +11,7 @@ package Searching;
 public class ReverseWordOrderinSentence {
     
     public static void main(String[] args) {
-        String s = " a b c  d";
+        String s = "a b  c";
         String ans = new ReverseWordOrderinSentence().reverse(s);
         System.out.println(ans);
     }
@@ -29,8 +29,8 @@ public class ReverseWordOrderinSentence {
                 ws = i + 1;
             }
         }
-        if (we != 0)
-            reverseUtil(arr, ws, s.length() - 1);
+        
+        reverseUtil(arr, ws, s.length() - 1);
         StringBuilder sb = new StringBuilder();
         for (char c : arr)
             sb.append(c);

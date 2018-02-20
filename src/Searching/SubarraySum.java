@@ -45,7 +45,7 @@ public class SubarraySum {
         int curSum = arr[0], start = 0;
         int res = 0;
         for (int i = 1; i <= arr.length; i++) {
-            while (curSum > target && start <= i - 1) { // if start < i - 1, then [10, 3] target 3, 10 will not be ignored.
+            while (curSum > target && start < i) { // if start < i - 1, then [10, 3] target 3, 10 will not be ignored.
                 curSum -= arr[start];
                 start++;
             }
