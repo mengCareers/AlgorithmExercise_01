@@ -180,9 +180,9 @@ public class Searching {
      * @param arr
      * @param x 
      */
-    public void dutchFlog(int[] arr, int x) {
+    public void dutchFlog(int[] arr, int x) { // x = a[lo] in 3-way partition
         int s = 0;
-        int m = 0;
+        int m = 0; 
         int e = arr.length - 1;
         /* 1 1 2 1 1 3 3 4   x = 3
                      s
@@ -232,7 +232,7 @@ public class Searching {
 
     public static void main(String[] args) {
         Searching inst = new Searching();
-        int[] arr = {1, 4, 2, 1, 3, 3};
+        int[] arr = {5, 4, 2, 1, 3, 3};
         int x = 3;
 //        int ans = inst.ceilingSortedArray(arr, x);
 

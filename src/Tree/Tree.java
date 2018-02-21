@@ -269,6 +269,14 @@ public class Tree {
         }
     }
 
+    /**
+     * Why do we use QItem?
+     * we need to keep track of hd,
+     * hd is used in recursion,
+     * it is not ref value,
+     * so it changed without control, that is, not the same instance every time
+     * so we make it 'ref', that is, packed in an object.
+     */
     public void printtopview() {
         if (root == null) {
             return;
@@ -300,9 +308,13 @@ public class Tree {
         }
     }
 
+    public void printKDistLvl(int k) {
+        printKDistLvl(root, k);
+    }
+    
     private void printKDistLvl(TreeNode node, int k) {
         if (node != null) {
-            if (k == 0) {
+            if (k == 1) {
                 System.out.print(node.val + " ");
             }
             printKDistLvl(node.left, k - 1);
@@ -324,7 +336,7 @@ public class Tree {
 //        tree.printleftview();
 //        tree.printrightview();
 //        tree.printtopview();
-//        tree.printKDistLvl(3);
+        tree.printKDistLvl(3);
 
     }
 
