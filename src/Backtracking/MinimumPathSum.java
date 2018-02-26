@@ -1,4 +1,4 @@
-package DFS;
+package Backtracking;
 
 /*
  *  Q:64. Minimum Path Sum

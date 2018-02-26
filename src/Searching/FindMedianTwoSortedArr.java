@@ -8,12 +8,12 @@ package Searching;
  *
  * @author xinrong
  */
-public class FindMedianTwoSortedArrEqualSz {
+public class FindMedianTwoSortedArr {
 
     public static void main(String[] args) {
         int[] nums1 = {1, 3, 5, 6};
         int[] nums2 = {2, 4, 6, 7};
-        double ans = new FindMedianTwoSortedArrEqualSz().findMedianSortedArrays(nums1, nums2);
+        double ans = new FindMedianTwoSortedArr().findMedianSortedArrays(nums1, nums2);
         System.out.println(ans);
     }
     

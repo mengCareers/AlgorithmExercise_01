@@ -6,7 +6,7 @@ output: biggest connected coponents
    e : connected if island 
    if 1, dfs connected 1s, cnt s
  */
-package DFS;
+package Backtracking;
 
 import java.util.Stack;
 
