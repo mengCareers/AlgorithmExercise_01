@@ -14,68 +14,65 @@ import java.util.List;
  * @author xinrong
  */
 public class NQueens {
-    // m = n, n = n
 
-    int N;
-    List<List<String>> result;
+    private static int N;
+    private static List<List<Integer>> interResult;
 
     public List<List<String>> solveNQueens(int n) {
-        result = new ArrayList<>();
-        if (n <= 0) {
-            return result;
-        }
         N = n;
-        int[] res = new int[n];
-        // res[x] = y, (x, y) put queen
-        int cptr = 0;
-        util(res, cptr);
-        return result;
+        interResult = new ArrayList<>();
+        util(0, new ArrayList<>());
+        return constructResult(interResult);
     }
 
-    void util(int[] res, int cptr) {
-        if (cptr == N) {
-            printres(res);
+    private void util(int ri, ArrayList<Integer> cur) {
+        if (ri == N) {
+            interResult.add(new ArrayList<>(cur)); // !!!! cur卸货卸货～
             return;
         }
         for (int i = 0; i < N; i++) {
-            if (isValid(cptr, i, res)) {
-                res[cptr] = i;
-                util(res, cptr + 1);
+            if (isValid(i, ri, cur)) {
+                cur.add(i);
+                util(ri + 1, cur);
+                cur.remove(cur.size() - 1);
             }
         }
     }
 
-    void printres(int[] res) {
-        List<String> curlist = new ArrayList<>();
-        for (int x = 0; x < N; x++) {
-            StringBuilder cur = new StringBuilder();
-            for (int y = 0; y < N; y++) {
-                if (y == res[x]) {
-                    // is Q
-                    cur.append("Q");
-                } else {
-                    // is .
-                    cur.append(".");
-                }
-            }
-            curlist.add(cur.toString());
-        }
-        result.add(curlist);
-    }
-
-    // valid if (cptr, ..) (.., y) no queen
-    boolean isValid(int cptr, int i, int[] res) {
-        for (int p = 0; p < cptr; p++) {
-            if (res[p] == i) {
+    // true if we can cur.set(ri) = ti
+    private boolean isValid(int ti, int ri, ArrayList<Integer> cur) {
+        for (int i = 0; i < cur.size(); i++) {
+            if (cur.get(i) == ti) {
                 return false;
             }
-            if (res[p] - i == cptr - p)
+            if (i - ri == cur.get(i) - ti) {
                 return false;
-            if (res[p] - i == p - cptr)
+            }
+            if (i - ri == ti - cur.get(i)) {
                 return false;
+            }
         }
         return true;
     }
 
+    private List<List<String>> constructResult(List<List<Integer>> interResult) { // [[1 3 0 2], [2 0 3 1]]
+        List<List<String>> finalResult = new ArrayList<>();
+        for (List<Integer> res : interResult) {
+            List<String> solu = new ArrayList<>();
+            for (int r : res) {
+                StringBuilder sb = new StringBuilder();
+                for (int i = 0; i < N; i++) {
+                    if (i == r) {
+                        sb.append("Q");
+                    } else {
+                        sb.append(".");
+                    }
+                }
+                solu.add(sb.toString());
+            }
+            finalResult.add(solu);
+        }
+        return finalResult;
+    }
 
 }

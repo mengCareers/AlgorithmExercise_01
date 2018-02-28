@@ -7,6 +7,17 @@ Input:Digit string "23"
 Output: ["ad", "ae", "af", "bd", "be", "bf", "cd", "ce", "cf"].
  * Thought Process:
  * m is not a fix value in this problem
+    "abc" "def"
+res ad
+    ae
+    af
+    bd
+    be
+    bf
+    cd
+    ce
+    cf
+cptr means which word and res[cptr]
  */
 package Backtracking;
 
@@ -18,37 +29,34 @@ import java.util.List;
  * @author xinrong
  */
 public class LetterCombinationsofPhoneNumber {
-
+    
     private static final String[] LETTERS = new String[]{
         "", "", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"
     };
 
-    List<String> result;
-    List<String> letters;
-
+    List<String> result = new ArrayList<>();
+    List<String> lst;
     public List<String> letterCombinations(String digits) {
-        result = new ArrayList<>();
-        if (digits == null || digits.length() == 0) {
+        if (digits.length() == 0)
             return result;
-        }
-        letters = new ArrayList<>();
-        for (char i : digits.toCharArray()) {
-            letters.add(LETTERS[i - '0']);
-        }
-        int curptr = 0;
-        dfs("", curptr);
+        char[] cd = digits.toCharArray(); //'2' '3'
+        lst = new ArrayList<>(); // "abc" "def"
+        for (char c : cd)
+            lst.add(LETTERS[c - '0']);
+        dfs("", 0);
         return result;
     }
 
-    private void dfs(String cur, int curptr) {
-        if (curptr == letters.size()) {
+    private void dfs(String cur, int cptr) {
+        if (cptr == lst.size()) {
             result.add(cur);
             return;
         }
-        String letter = letters.get(curptr);
-        for (int i = 0; i < letter.length(); i++) {
-            dfs(cur + letter.charAt(i), curptr + 1);
+        String str = lst.get(cptr);
+        for (int i = 0; i < str.length(); i++) {        
+            dfs(cur + str.charAt(i), cptr + 1);
         }
+        
     }
 
     public static void main(String[] args) {

@@ -8,7 +8,7 @@
    PQ<obj> should override Comparator
    we assume that each node in listlist can be null to exclude corner case
    Comparator<Specific> () { @Override ..}
-*/
+ */
 package LinkedList;
 
 import java.util.Comparator;
@@ -19,28 +19,33 @@ import java.util.PriorityQueue;
  * @author xinrong
  */
 public class MergeKSortedLists {
-    public Node mergeKLists(Node[] lists) {
-        if (lists == null || lists.length == 0) return null;
-        Node dummyHead = new Node(0);
-        Node ptr = dummyHead;
-        PriorityQueue<Node> pq = new PriorityQueue<>(lists.length, new Comparator<Node>(){
+
+    public ListNode mergeKLists(ListNode[] lists) {
+        if (lists == null || lists.length == 0) {
+            return null;
+        }
+        PriorityQueue<ListNode> pq = new PriorityQueue<>(new Comparator<ListNode>() {
             @Override
-            public int compare(Node a, Node b) {
-                return a.val - b.val;
+            public int compare(ListNode o1, ListNode o2) {
+                return o1.val - o2.val;
             }
         });
-        for (Node node : lists) {
-            if (node != null)
-                pq.add(node);
+        for (ListNode lnode : lists) {
+            if (lnode != null) {
+                pq.add(lnode);
+            }
         }
-        while (!pq.isEmpty()) {
-            Node smallest = pq.poll();
-            if (smallest != null) {
-                ptr.next = smallest;
-                ptr = smallest;
-                if (smallest.next != null) pq.add(smallest.next);
-            } 
+
+        ListNode head = new ListNode(0);
+        ListNode ptr = head;
+        while (pq.size() != 0) {
+            ListNode pnode = pq.poll();
+            ptr.next = pnode;
+            ptr = ptr.next;
+            if (pnode.next != null) {
+                pq.add(pnode.next);
+            }
         }
-        return dummyHead.next;
+        return head.next;
     }
 }

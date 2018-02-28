@@ -14,34 +14,29 @@ import java.util.List;
 public class Subsets {
     // m = 2, 1 2 3, n = 3
 
+    // ordered              start
+    // without duplicate    isValid() or used[i]
+    
     List<List<Integer>> result;
-
+    
     public List<List<Integer>> subsets(int[] nums) {
+        
         result = new ArrayList<>();
-        int[] res = new int[nums.length];
-        int curptr = 0;
-        subsetsUtil(res, curptr, nums);
+        
+        util(nums, 0, new ArrayList<Integer>());
+        
         return result;
+        
     }
-
-    void subsetsUtil(int[] res, int curptr, int[] nums) {
-        if (curptr == res.length) {
-            printResult(res, nums);
+    
+    void util(int[] nums, int start, List<Integer> cur) {
+        if (start > nums.length)
             return;
+        result.add(new ArrayList<>(cur));
+        for (int i = start; i < nums.length; i++ ) {
+            cur.add(nums[i]);
+            util(nums, i + 1, cur);
+            cur.remove(cur.size() - 1);
         }
-        for (int i = 0; i < 2; i++) {
-            res[curptr] = i;
-            subsetsUtil(res, curptr + 1, nums);
-        }
-    }
-
-    void printResult(int[] res, int[] nums) {
-        List<Integer> cur = new ArrayList<>();
-        for (int i = 0; i < res.length; i++) {
-            if (res[i] == 1) {
-                cur.add(nums[i]);
-            }
-        }
-        result.add(cur);
     }
 }

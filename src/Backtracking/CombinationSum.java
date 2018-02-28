@@ -23,31 +23,24 @@ public class CombinationSum {
         System.out.println(res.size());
     }
 
-    List<List<Integer>> res;
-    List<Integer> cur;
-
+    List<List<Integer>> result;
     public List<List<Integer>> combinationSum(int[] candidates, int target) {
-        if (candidates == null || candidates.length == 0) 
-            return res;
-        int curptr = 0;
-        res = new ArrayList<>();
-        cur = new ArrayList<>();
-        util(curptr, candidates, target);
-        return res;
+        result = new ArrayList<>();
+        util(candidates, target, new ArrayList<>(), 0);
+        return result;
     }
-
-    private void util(int curptr, int[] candidates, int target) {
-        if (0 > target) {
+    
+    void util(int[] candidates, int target, List<Integer> cur, int start) {
+        if (target == 0) {
+            result.add(new ArrayList<>(cur));
             return;
         }
-        if (0 == target) {
-            res.add(new ArrayList<>(cur));
+        if (target < 0 || start >= candidates.length)
             return;
-        }
-        for (int i = curptr; i < candidates.length; i++) {
-            int ele = candidates[i];
-            cur.add(ele);
-            util(i, candidates, target - ele);
+            
+        for (int i = start; i < candidates.length; i++) {
+            cur.add(candidates[i]);
+            util(candidates, target - candidates[i], cur, i); // if i + 1 rather than i, 223 excluded
             cur.remove(cur.size() - 1);
         }
     }

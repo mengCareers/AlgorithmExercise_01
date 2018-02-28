@@ -31,27 +31,31 @@ public class SubsetsII {
 
     public static void main(String[] args) {
         int[] nums = {1, 2, 2};
-        List<List<Integer>> result = new SubsetsII().subsets(nums);
+        List<List<Integer>> result = new SubsetsII().subsetsWithDup(nums);
         System.out.println(result);
     }
 
     List<List<Integer>> result;
-    List<Integer> cur;
-
-    public List<List<Integer>> subsets(int[] nums) {
+    
+    public List<List<Integer>> subsetsWithDup(int[] nums) {
+        
         result = new ArrayList<>();
-        cur = new ArrayList<>();
+        
         Arrays.sort(nums);
-        subsetsUtil(0, nums);
+        util(nums, 0, new ArrayList<Integer>());
+        
         return result;
+        
     }
-
-    void subsetsUtil(int start, int[] nums) {
+    
+    void util(int[] nums, int start, List<Integer> cur) {
+        if (start > nums.length)
+            return;
         result.add(new ArrayList<>(cur));
         int i = start;
-        while(i < nums.length) {
+        while (i < nums.length) {
             cur.add(nums[i]);
-            subsetsUtil(i + 1, nums);
+            util(nums, i + 1, cur);
             cur.remove(cur.size() - 1);
             i++;
             while (i < nums.length && nums[i] == nums[i - 1])
