@@ -13,8 +13,9 @@ If nums = [1,2,2], a solution is:
 ]
 
  * Thought Process:
-after backtrack, while ==, ignore (i ++)
+AFTER backtrack, while ==, ignore (i ++)
 so use while instead of for to control i
+INIT i = START not to start from beginning every time
  * 
  */
 package Backtracking;
@@ -35,31 +36,26 @@ public class SubsetsII {
         System.out.println(result);
     }
 
-    List<List<Integer>> result;
-    
+    List<List<Integer>> res;
+
     public List<List<Integer>> subsetsWithDup(int[] nums) {
-        
-        result = new ArrayList<>();
-        
         Arrays.sort(nums);
-        util(nums, 0, new ArrayList<Integer>());
-        
-        return result;
-        
+        res = new ArrayList<>();
+        util(new ArrayList<Integer>(), nums, 0);
+        return res;
     }
-    
-    void util(int[] nums, int start, List<Integer> cur) {
-        if (start > nums.length)
-            return;
-        result.add(new ArrayList<>(cur));
+
+    private void util(List<Integer> cur, int[] nums, int start) {
+        res.add(new ArrayList<>(cur));
         int i = start;
         while (i < nums.length) {
             cur.add(nums[i]);
-            util(nums, i + 1, cur);
+            util(cur, nums, i + 1);
             cur.remove(cur.size() - 1);
             i++;
-            while (i < nums.length && nums[i] == nums[i - 1])
+            while (i < nums.length && nums[i] == nums[i - 1]) {
                 i++;
+            }
         }
     }
 }

@@ -13,26 +13,27 @@ package Tree;
 public class MaximumBinaryTree {
 
     public TreeNode constructMaximumBinaryTree(int[] nums) {
-        return construct(nums, 0, nums.length);
+        return constructMaximumBinaryTree(nums, 0, nums.length - 1);
     }
-    TreeNode construct(int[] nums, int l, int r) {
-        if (l == r)
+
+    private TreeNode constructMaximumBinaryTree(int[] nums, int s, int e) {
+        if (s > e) {
             return null;
-        int mi = getMaxI(nums, l, r);
-        TreeNode root = new TreeNode(nums[mi]);
-        root.left = construct(nums, l, mi);
-        root.right = construct(nums, mi + 1, r);
+        }
+        int maxid = getMax(nums, s, e);
+        TreeNode root = new TreeNode(nums[maxid]);
+        root.left = constructMaximumBinaryTree(nums, s, maxid - 1);
+        root.right = constructMaximumBinaryTree(nums, maxid + 1, e);
         return root;
     }
-    int getMaxI(int[] nums, int l, int r) {
-        int mi = l;
-        int mv = nums[l];
-        for (int i = l + 1; i < r; i++) {
-            if (nums[i] > mv) {
-                mi = i;
-                mv = nums[i];
+
+    private int getMax(int[] nums, int s, int e) { // [s, e]
+        int maxid = s;
+        for (int i = s; i <= e; i++) {
+            if (nums[i] > nums[maxid]) {
+                maxid = i;
             }
         }
-        return mi;
+        return maxid;
     }
 }
