@@ -1,5 +1,7 @@
-/*
- * Thought Process:
+/* Q: 8. String to Integer (atoi)
+ * Get:
+        // +-n is illegal so will return 0
+        // sum set to double to compare with Integer.MAX_VALUE and Integer.MIN_VALUE
  * 
  */
 package String;
@@ -11,32 +13,35 @@ package String;
 public class StringtoIntegerAtoi {
 
     public int myAtoi(String str) {
-        if (str == null || str.length() == 0) {
+        if (str == null || str.length() == 0)
             return 0;
-        }
         str = str.trim();
-        int vi = 0;
-        char flag = '+';
-        if (str.charAt(vi) == '-') {
-            flag = '-';
-            vi++;
-        } else if (str.charAt(vi) == '+') {
-            vi++;
+        boolean positive = false;
+        int i = 0;
+        char init = str.charAt(i);        
+        if (init == '+'){
+            positive = true;
+            i++;
+        } 
+        else if (init == '-') {
+            i++;
         }
-        double res = 0;
-        while (vi < str.length() && str.charAt(vi) >= '0' && str.charAt(vi) <= '9') {
-            res = res * 10 + (str.charAt(vi) - '0');
-            vi++;
+        else {
+            positive = true;
         }
-        if (flag == '-') {
-            res = -res;
-        }
-        if (res > Integer.MAX_VALUE) {
-            return Integer.MAX_VALUE;
-        }
-        if (res < Integer.MIN_VALUE) {
+        int digit = 0;
+        double sum = 0;
+        while (i < str.length() && str.charAt(i) >= '0' && str.charAt(i) <= '9') {
+            digit = str.charAt(i) - '0';
+            sum = sum * 10 + digit;
+            i++;
+        }       
+        if (!positive)
+            sum = -sum;
+        if (sum < Integer.MIN_VALUE)
             return Integer.MIN_VALUE;
-        }
-        return (int) res;
+        if (sum > Integer.MAX_VALUE)
+            return Integer.MAX_VALUE;
+        return (int)sum;
     }
 }

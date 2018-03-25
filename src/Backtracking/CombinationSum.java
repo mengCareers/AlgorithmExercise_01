@@ -19,29 +19,38 @@ public class CombinationSum {
     public static void main(String[] args) {
         int[] candidates = {10, 1, 2, 7, 6, 1, 5};
         int t = 8;
-        List<List<Integer>> res = new CombinationSum().combinationSum(candidates, t);
+        List<List<Integer>> res = new CombinationSum().testCombinationSum(candidates, t);
         System.out.println(res.size());
     }
 
-    List<List<Integer>> result;
-    public List<List<Integer>> combinationSum(int[] candidates, int target) {
-        result = new ArrayList<>();
-        util(candidates, target, new ArrayList<>(), 0);
+    public List<List<Integer>> testCombinationSum(int[] candidates, int target) {
+        List<List<Integer>> result = new ArrayList<>();
+        combinationSum(candidates, target, new ArrayList<>(), result, 0);
         return result;
     }
     
-    void util(int[] candidates, int target, List<Integer> cur, int start) {
+    /**if for (int i = 0; i < candidates.length; i++) 
+     * Would get results [[2,2,3],[2,3,2],[3,2,2],[7]]
+     * To MAKE SURE the solution set must not contain duplicate combinations.
+     * So we use starti
+     * @param candidates
+     * @param target
+     * @param curcomb
+     * @param result 
+     */
+    private void combinationSum(int[] candidates, int target, List<Integer> curcomb, List<List<Integer>> result, int starti) {
         if (target == 0) {
-            result.add(new ArrayList<>(cur));
-            return;
+            result.add(new ArrayList<>(curcomb));
         }
-        if (target < 0 || start >= candidates.length)
-            return;
-            
-        for (int i = start; i < candidates.length; i++) {
-            cur.add(candidates[i]);
-            util(candidates, target - candidates[i], cur, i); // if i + 1 rather than i, 223 excluded
-            cur.remove(cur.size() - 1);
+        else if (target < 0) {
+           
+        }
+        else {
+            for (int i = starti; i < candidates.length; i++) {
+                curcomb.add(candidates[i]);
+                combinationSum(candidates, target - candidates[i], curcomb, result, i);
+                curcomb.remove(curcomb.size() - 1);
+            }
         }
     }
 }

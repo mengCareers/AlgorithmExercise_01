@@ -10,19 +10,23 @@ package LinkedList;
  * @author xinrong
  */
 public class ReverseLinkedList {
+    
+    public ListNode reverseList(ListNode head) {
+        if (head == null || head.next == null)
+            return head;
+        ListNode pre = head;
+        ListNode cur = head.next;
+        while (cur != null) {
+            ListNode nxt = cur.next;
+            cur.next = pre;
+            pre = cur;
+            cur = nxt;
+        }
+        head.next = null;
+        return pre;
+    }
    
     public Node reverse(Node head) {
-    /*    Node curr = head;
-        Node prev = null;
-        Node next = null;
-        while (curr != null) {
-            next = curr.next;
-            curr.next = prev;
-            prev = curr;
-            curr = next;
-        }
-        return prev;
-     */   
         return reverse(head, null);
     }
     

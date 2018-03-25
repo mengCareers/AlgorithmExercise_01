@@ -10,7 +10,9 @@ package Tree;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.Stack;
 
 /**
@@ -274,5 +276,86 @@ public class BST {
             }
         }
         return false;
+    }
+
+    public boolean isBST() {
+        return isBSTUtil(root, Integer.MIN_VALUE, Integer.MAX_VALUE);
+    }
+
+    private boolean isBSTUtil(Node tn, int min, int max) {
+        if (root == null) {
+            return true;
+        }
+        return isBSTUtil(tn.left, min, root.data) && isBSTUtil(tn.right, root.data, max);
+    }
+
+    public Node lowestCommonAncestor(int x, int y) {
+        // when they are going to different directions
+        return lowestCommonAncestorBST(root, x, y);
+    }
+    
+    
+    private Node lowestCommonAncestorBT(Node root, Node x, Node y) {
+        if (root == null || root == x || root == y)
+            return root;
+        Node lnode = lowestCommonAncestorBT(root.left, x, y);
+        Node rnode = lowestCommonAncestorBT(root.right, x, y);
+        if (lnode == null)
+            return rnode;
+        if (rnode == null)
+            return lnode;
+        return root;
+    }
+
+    private Node lowestCommonAncestorBST(Node root, int x, int y) {
+        if (root == null) {
+            return null;
+        }
+        Node cur = root;
+        while ((x < cur.data && y < cur.data) || (x > cur.data && y > cur.data)) {
+            if (x < cur.data) {
+                cur = cur.left;
+            } else {
+                cur = cur.right;
+            }
+        }
+        return cur;
+    }
+    
+    public Node constructBSTbyPreorder(int[] arr) {
+        /*
+        The first element of preorder traversal is always root. 
+        We first construct the root. 
+        Then we find the index of first element which is greater than root. 
+        Let the index be ‘i’. T
+        he values between root and ‘i’ will be part of left subtree, 
+        and the values between ‘i+1’ and ‘n-1’ will be part of right subtree. 
+        Divide given pre[] at index “i” and recur for left and right sub-trees.
+        */
+       return constructBSTbyPreorderUtil(arr, new Index(), 0, arr.length - 1);
+    }
+    
+    class Index {
+        int idx = 0;
+    }
+    // if mirror tree() , find if two nodes are mirror of each other()
+    // if one tree is subtree of another tree
+    //
+    private Node constructBSTbyPreorderUtil(int[] arr, Index index, int lo, int hi) {
+        if (lo > hi)
+            return null;
+        Node root = new Node(arr[index.idx]); // root
+        index.idx++;
+        if (lo == hi)
+            return root;
+        // search for a greater one
+        int i = 0;
+        for (i = lo; i <= hi; i++) {
+            if (arr[i] > root.data)
+                break;
+        } 
+        root.left = constructBSTbyPreorderUtil(arr, index, index.idx, i - 1);
+        root.right = constructBSTbyPreorderUtil(arr, index, i, hi);
+        return root;
     }
 }

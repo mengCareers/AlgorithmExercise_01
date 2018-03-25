@@ -18,18 +18,24 @@ package Tree;
  * @author xinrong
  */
 public class SymmetricTree {
+
     public boolean isSymmetric(TreeNode root) {
-        if (root == null)
+        if (root == null) {
             return true;
+        }
         return issymutil(root.left, root.right);
-    }    
+    }
+
     private boolean issymutil(TreeNode ln, TreeNode rn) {
-        if (ln == null && rn == null)
+        if (ln == null && rn == null) {
             return true;
-        if (ln == null || rn == null)
+        }
+        if (ln == null || rn == null) {
             return false;
-        if (ln.val != rn.val)
+        }
+        if (ln.val != rn.val) {
             return false;
+        }
         return issymutil(ln.left, rn.right) && issymutil(ln.right, rn.left);
     }
 }

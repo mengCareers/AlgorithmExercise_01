@@ -1,55 +1,102 @@
 /* 46. Permutations
 Given a collection of distinct numbers, return all possible permutations.
+public void permute(int[] nums)
 
-For example,
-[1,2,3] have the following permutations:
-[
-  [1,2,3],
-  [1,3,2],
-  [2,1,3],
-  [2,3,1],
-  [3,1,2],
-  [3,2,1]
-]
+Given a collection of distinct chars, return all possible permutations.
+public void permute(char[] nums)
+
+They show two methods of decreasing child nodes, that is, to see if i has been selected
+    + Use boolean[] check, check[i] = true if i has been selected
+    + Use method isValid(), iterate order to see if order[0, curptr) occur i
+Here, i represent element on the ith element in nums
+    e.g. char[] chnums = {'.', '!', '*'};
+                        i  0    1    2
  * 
  */
 package Backtracking;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  *
  * @author xinrong
  */
 public class Permutations {
-    // m = nums.length, n = nums.length
 
-    List<List<Integer>> result;
-
-    public List<List<Integer>> permute(int[] nums) {
-        result = new ArrayList<>();
+    /**
+     * Parameter is int[]
+     *
+     * @param nums
+     */
+    public void permute(int[] nums) {
         int len = nums.length;
-        int[] res = new int[len];
-        int curptr = 0;
-        permuteUtil(res, curptr, nums);
-        return result;
+        int[] order = new int[len];
+        int curheight = 0;
+        permuteUtil(order, curheight, nums);
     }
 
-    private void permuteUtil(int[] res, int curptr, int[] nums) {
-        if (curptr == res.length) {
-            printResult(nums, res);
+    /**
+     * Parameter is char[]
+     *
+     * @param nums
+     */
+    public void permute(char[] nums) {
+        int len = nums.length;
+        int[] order = new int[len];
+        int curheight = 0;
+        permuteUtil(order, curheight, nums);
+    }
+
+    /**
+     * Use check[] to decrease child nodes
+     *
+     * @param order
+     * @param curheight
+     * @param nums
+     */
+    private void permuteUtil(int[] order, int curheight, int[] nums) {
+        if (curheight == nums.length) {
+            printOrderArr(order, nums);
             return;
         }
         for (int i = 0; i < nums.length; i++) {
-            if (isValid(res, curptr, i)) {
-                res[curptr] = i;
-                permuteUtil(res, curptr + 1, nums);
+            if (isValid(order, curheight, i)) {
+                order[curheight] = i;
+                permuteUtil(order, curheight + 1, nums);
             }
         }
     }
 
-    // return true if res[0, curptr) not occur i
+    /**
+     * Use isValid() to decrease child nodes
+     *
+     * @param order
+     * @param curheight
+     * @param nums
+     */
+    private void permuteUtil(int[] order, int curheight, char[] nums) {
+        if (curheight == nums.length) {
+            printOrderArr(order, nums);
+            return;
+        }
+        boolean[] check = new boolean[nums.length];
+        for (int i = 0; i < curheight; i++) {
+            check[order[i]] = true;
+        }
+        for (int i = 0; i < nums.length; i++) {
+            if (check[i] == false) {
+                order[curheight] = i;
+                permuteUtil(order, curheight + 1, nums);
+            }
+        }
+    }
+
+    /**
+     * Valid if res[0, curptr) not occur i
+     *
+     * @param res
+     * @param curptr
+     * @param i
+     * @return
+     */
     private boolean isValid(int[] res, int curptr, int i) {
         for (int k = 0; k < curptr; k++) {
             if (res[k] == i) {
@@ -59,11 +106,25 @@ public class Permutations {
         return true;
     }
 
-    private void printResult(int[] nums, int[] res) {
-        List<Integer> cur = new ArrayList<>();
-        for (int i : res) {
-            cur.add(nums[i]);
+    private void printOrderArr(int[] order, int[] nums) {
+        for (int i : order) {
+            System.out.print(nums[i] + ",");
         }
-        result.add(cur);
+        System.out.println();
     }
+
+    private void printOrderArr(int[] order, char[] nums) {
+        for (int i : order) {
+            System.out.print(nums[i] + ",");
+        }
+        System.out.println();
+    }
+
+    public static void main(String[] args) {
+        char[] chnums = {'.', '*', '!'};
+        new Permutations().permute(chnums);
+        int[] intnums = {7, 8, 9};
+        new Permutations().permute(intnums);
+    }
+
 }
