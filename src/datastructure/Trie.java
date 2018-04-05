@@ -1,20 +1,43 @@
+package datastructure;
+
 
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+Counter Intuitive,
+not store letters in the nodes, instead letter is stored implicitly on each [link]
+ArrayBased Trie 
+=> To save space, replace array with a Map Map<Character, Node> links
  */
-
 /**
  *
  * @author xinrong
  */
 public class Trie {
+
     private TrieNode root;
+
     public Trie() {
         root = new TrieNode();
     }
-    public void insert(String word){
+
+    public void insertRecursively(String word) {
+        insertUtil(root, word, 0);
+    }
+
+    private TrieNode insertUtil(TrieNode root, String word, int id) {
+        if (root == null) {
+            root = new TrieNode();
+        }
+        if (id == word.length()) {
+            root.isEnd = true;
+            return root;
+        }
+        char c = word.charAt(id);
+        int index = c - 'a';
+        root.arr[index] = insertUtil(root.arr[index], word, id + 1);
+        return root;
+    }
+
+    public void insertIteratively(String word) {
         TrieNode p = root;
         for (int i = 0; i < word.length(); i++) {
             char c = word.charAt(i);
@@ -29,33 +52,29 @@ public class Trie {
         }
         p.isEnd = true;
     }
-    
-    /**
-     * Returns if the word is in the trie
-     * @param word
-     * @return 
-     */
+
     public boolean search(String word) {
-        TrieNode p = searchNode(word);
-        if (p == null) return false;
-        else {
-            if (p.isEnd) return true;
+        TrieNode p = searchUtil(word);
+        if (p == null) {
+            return false;
+        } else {
+            if (p.isEnd) {
+                return true;
+            }
         }
         return false;
     }
-    
-    /**
-     * Returns if there is any word in the trie that starts with the given prefix
-     * @param prefix
-     * @return 
-     */
+
     public boolean startsWith(String prefix) {
-        TrieNode p = searchNode(prefix);
-        if (p == null) return false;
-        else return true;
+        TrieNode p = searchUtil(prefix);
+        if (p == null) {
+            return false;
+        } else {
+            return true;
+        }
     }
-    
-    public TrieNode searchNode(String s) {
+
+    private TrieNode searchUtil(String s) {
         TrieNode p = root;
         for (int i = 0; i < s.length(); i++) {
             char c = s.charAt(i);
@@ -66,13 +85,18 @@ public class Trie {
                 return null;
             }
         }
-        if (p == root) return null;
+        if (p == root) {
+            return null;
+        }
         return p;
     }
 }
+
 class TrieNode {
+
     TrieNode[] arr;
     boolean isEnd;
+
     public TrieNode() {
         this.arr = new TrieNode[26];
     }

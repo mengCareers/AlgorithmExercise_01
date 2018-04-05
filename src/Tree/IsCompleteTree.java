@@ -32,8 +32,9 @@ public class IsCompleteTree {
     }
 
     public boolean isCompleteTree(TreeNode root) {
-        if (root == null)
+        if (root == null) {
             return true;
+        }
         Queue<TreeNode> q = new LinkedList<>();
         q.add(root);
         boolean meetOneChild = false;
@@ -44,10 +45,9 @@ public class IsCompleteTree {
                     return false;
                 }
                 q.add(pn.left);
-
-            }
-            else
+            } else {
                 meetOneChild = true;
+            }
             if (pn.right != null) {
                 if (meetOneChild == true) {
                     return false;

@@ -60,11 +60,18 @@ public class NewClass {
         return hash;
     }
     
+    static int selfIncrease(int[] i) {
+        return i[0]++;
+    }
+    
     public static void main(String[] args) throws ClassNotFoundException {
         List<Integer> list = Arrays.asList(1, 3, 5);
         //list.forEach(n -> System.out.print(n + " "));
         list.forEach(System.out::println);
 //        Object o = Class.forName("NewClass");
 //        System.out.println(o.getClass().getSimpleName());
+        int[] i = {1};
+        System.out.println("Self : " + selfIncrease(i));
+        System.out.println("Self : " + selfIncrease(i));
     }
 }
