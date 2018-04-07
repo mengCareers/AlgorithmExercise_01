@@ -23,11 +23,6 @@ for(int len=1;len<=n;len++)
         }
     }
 }
-
-作者：KingSann
-链接：https://www.jianshu.com/p/24feb3ccaf2e
-來源：简书
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
  * 
  */
 package DynamicProgramming;
