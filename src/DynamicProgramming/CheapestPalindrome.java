@@ -8,7 +8,26 @@ So for the dp [i] [j] in three cases
 First of all: for a string if s [i] ==s [j], dp[i][j]=dp[i+1][j-1] NOT PROMISE TO BE MINIMUM COST FOR IT IS WEIGHTED
 Second: if dp [i+1] [j] is a palindrome string, then dp[i][j]=dp[i+1][j]+min(add[i], del[i]),
 Finally, if the dp [i] [j-1] is a palindrome string, then dp[i][j]=dp[i][j-1] + min(add[j], del[j]),
+ * Get: 区间dp
+WHAT ? 是指在一段区间上的dp，通过枚举左右子区间来求出解。
+HOW ? 去枚举左右子区间，循环一个变量len，表示区间长度，然后循环左区间从开始到结尾，一般来说是1～n。
+      先求出小区间（部分）最优解，然后一个又一个小区间合并成稍微大点的大区间，最后合成答案——即总区间。
+for(int len=1;len<=n;len++)
+{
+    for(int l=1,r;(r=l+len)<=n;l++)
+    {
+        //do something
+        for(int k=l;k<r;k++)
+        {
+            //update dp array,such as'min(dp[l][r],dp[l][i]+dp[i+1][r])'
+        }
+    }
+}
 
+作者：KingSann
+链接：https://www.jianshu.com/p/24feb3ccaf2e
+來源：简书
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
  * 
  */
 package DynamicProgramming;
