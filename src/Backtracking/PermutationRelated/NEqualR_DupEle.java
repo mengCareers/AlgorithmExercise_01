@@ -16,8 +16,9 @@ import java.util.stream.Collectors;
 public class NEqualR_DupEle {
 
     public static void main(String[] args) {
-        int[] nums = {1, 1, 2};
-        List<List<Integer>> allRes = new NEqualR_DupEle().permute(nums);
+        int[] nums = {1, 1, 1};
+        // List<List<Integer>> allRes = new NEqualR_DupEle().permute(nums);
+        List<List<Integer>> allRes = new NEqualR_DupEle().permuteNaive(nums);
         System.out.println(allRes);
     }
 
@@ -72,7 +73,6 @@ public class NEqualR_DupEle {
      *
      *
      */
-    
     public List<List<Integer>> permuteNaive(int[] nums) {
         List<List<Integer>> allRes = new ArrayList<>();
         List<Integer> curRes = new ArrayList<>();
@@ -86,11 +86,10 @@ public class NEqualR_DupEle {
         if (nums.length == curRes.size()) {
             allRes.add(new ArrayList<>(curRes));
         }
-        for (int i = 0; i < nums.length; i++) {
+        int i = 0;
+        while (i < nums.length) {
             if (curIndices.contains(i)) {
-                continue;
-            }
-            if (i > 0 && nums[i] == nums[i - 1] && !curIndices.contains(i - 1)) {
+                i++;
                 continue;
             }
             curRes.add(nums[i]);
@@ -98,7 +97,10 @@ public class NEqualR_DupEle {
             permuteUtil(curRes, allRes, nums, curIndices);
             curRes.remove(curRes.size() - 1);
             curIndices.remove(curIndices.size() - 1);
-
+            i++;
+            while (i < nums.length && i - 1 >= 0 && nums[i] == nums[i - 1]) {
+                i++;
+            }
         }
     }
 }
