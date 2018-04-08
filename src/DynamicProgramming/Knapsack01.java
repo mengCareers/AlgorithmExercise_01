@@ -14,7 +14,7 @@ consider only subsets weight <= W, and pick the maximum value subset
 2) Overlapping Subproblems
  * Recursion simply cause recomputations of same subproblems, it can be avoided by constructing
    K[i][w] in bottom up manner
-*/
+ */
 package DynamicProgramming;
 
 /**
@@ -22,17 +22,29 @@ package DynamicProgramming;
  * @author xinrong
  */
 public class Knapsack01 {
-    int knapSack(int W, int[] wt, int[] val, int n) {        
-        int K[][] = new int[n + 1][W + 1];
-        for (int i = 0 ; i <= n; i++) {
-            for (int w = 0; w <= W; w++) {
-                if (i == 0 || w == 0) K[i][w] = 0;
-                else if (wt[i - 1] > w) K[i][w] = K[i - 1][w] ;
-                else K[i][w] = Math.max(val[i - 1] + K[i - 1][w - wt[i - 1]], K[i - 1][w]);
+
+    int knapSack(int[] weight, int[] value, int limitWeight) {
+        int tmp[][] = new int[value.length + 1][limitWeight + 1];
+        for (int i = 0; i < tmp.length; i++) {
+            for (int j = 0; j < tmp[0].length; j++) {
+                if (i == 0 || j == 0) {
+                    tmp[i][j] = 0;
+                } else if (weight[i - 1] > j) {
+                    tmp[i][j] = tmp[i - 1][j];
+                } else {
+                    tmp[i][j] = Math.max(tmp[i - 1][j - weight[i - 1]] + value[i - 1], tmp[i - 1][j]);
+                }
             }
         }
-        return K[n][W];
+        for (int i = 0; i < tmp.length; i++) {
+            for (int j = 0; j < tmp[0].length; j++) {
+                System.out.print(tmp[i][j] + " ");
+            }
+            System.out.println();
+        }
+        return tmp[tmp.length - 1][tmp[0].length - 1];
     }
+
     /*
     int knapSack(int W, int[] wt, int[] val, int n) {
         // Base Case
@@ -43,13 +55,13 @@ public class Knapsack01 {
         return Math.max(val[n - 1] + knapSack(W - wt[n - 1], wt, val, n - 1),
                 knapSack(W, wt, val, n - 1));
     }
-    */
+     */
     public static void main(String[] args) {
-        int val[] = {60, 100, 120};
-        int wt[] = {10, 20, 30};
-        int W = 50;
-        int n = val.length;
-        int ans = new Knapsack01().knapSack(W, wt, val, n);
+        int val[] = {7, 12, 10, 15};
+        int wt[] = {1, 3, 4, 5};
+
+        int limitWeight = 7;
+        int ans = new Knapsack01().knapSack(wt, val, limitWeight);
         System.out.println(ans);
     }
 }

@@ -21,8 +21,83 @@ public class DPLec01 {
         boolean canSubsetSum = subsetSumUsedOnce(nums, target);
         boolean isInterleaved = isInterleaved("fghi", "abcde", "abfcghdei");
         int cntBT = cntAllBTswiththePreorderTraversal(5);
-
+        int longestPSubstring = findLongestPalindromeSubstring("abacdaad");
+        int longestPSubseq = findLongestPalindromeSubsequence("acabxbya");
+        int minDist = minEditDist("aacdx", "abacxy");
         System.out.println(cntBT);
+    }
+
+    private static void printTmpArray(int[][] tmp) {
+        for (int i = 0; i < tmp.length; i++) {
+            for (int j = 0; j < tmp[0].length; j++) {
+                System.out.print(tmp[i][j] + " ");
+            }
+            System.out.println();
+        }
+    }
+
+    public static int minEditDist(String s1, String s2) {
+        int[][] tmp = new int[s1.length() + 1][s2.length() + 1];
+        for (int i = 0; i < tmp.length; i++) {
+            tmp[i][0] = i;
+        }
+        for (int j = 0; j < tmp[0].length; j++) {
+            tmp[0][j] = j;
+        }
+        for (int i = 1; i < tmp.length; i++) {
+            for (int j = 1; j < tmp[0].length; j++) {
+                if (s1.charAt(i - 1) == s2.charAt(j - 1)) {
+                    tmp[i][j] = tmp[i - 1][j - 1];
+                } else {
+                    tmp[i][j] = Math.min(tmp[i][j - 1], Math.min(tmp[i - 1][j - 1], tmp[i - 1][j])) + 1;
+                }
+            }
+        }
+        // printTmpArray(tmp);
+        return tmp[tmp.length - 1][tmp[0].length - 1];
+    }
+
+    public static int findLongestPalindromeSubsequence(String s) {
+        int[][] tmp = new int[s.length() + 1][s.length() + 1];
+        for (int i = 1; i < tmp.length; i++) {
+            tmp[i][i] = 1;
+        }
+        int maxLen = Integer.MIN_VALUE;
+        for (int l = 1; l <= s.length(); l++) {
+            for (int i = 1; i + l < tmp.length; i++) {
+                int j = i + l;
+                if (s.charAt(i - 1) == s.charAt(j - 1)) {
+                    tmp[i][j] = tmp[i + 1][j - 1] + 2;
+                } else {
+                    tmp[i][j] = Math.max(tmp[i][j - 1], tmp[i + 1][j]);
+                }
+                maxLen = Math.max(maxLen, tmp[i][j]);
+            }
+        }
+        // printTmpArray(tmp);
+        return maxLen;
+    }
+
+    public static int findLongestPalindromeSubstring(String s) {
+        StringBuilder sb = new StringBuilder(s);
+        String rs = sb.reverse().toString();
+        return lenLCS(s, rs);
+    }
+
+    public static int lenLCS(String s1, String s2) {
+        int max = 0;
+        int[][] dp = new int[s1.length() + 1][s2.length() + 1];
+        for (int i = 1; i < dp.length; i++) {
+            for (int j = 1; j < dp[0].length; j++) {
+                if (s1.charAt(i - 1) == s2.charAt(j - 1)) {
+                    dp[i][j] = dp[i - 1][j - 1] + 1;
+                    if (dp[i][j] > max) {
+                        max = dp[i][j];
+                    }
+                }
+            }
+        }
+        return max;
     }
 
     public static boolean isInterleaved(String A, String B, String C) {
