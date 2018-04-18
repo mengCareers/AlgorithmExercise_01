@@ -21,17 +21,20 @@ import java.util.Random;
  * @author xinrong
  */
 public class ReservoirSampling {
+
     public int[] selectKItems(int[] stream, int k) {
         int[] reservoir = new int[k];
         int i = 0;
-        for (;i < k; i++)
+        for (; i < k; i++) {
             reservoir[i] = stream[i];
+        }
         Random rand = new Random();
-        
+
         while (i < stream.length) {
             int j = rand.nextInt(i + 1);
-            if (j < k)
+            if (j < k) {
                 reservoir[j] = stream[i];
+            }
             i++;
         }
         return reservoir;

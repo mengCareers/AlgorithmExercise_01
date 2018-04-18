@@ -28,40 +28,41 @@ import java.util.Set;
 public class WordLadder {
 
     public int ladderLength(String beginWord, String endWord, List<String> wordList) {
+        if (!wordList.contains(endWord)) {
+            return 0;
+        }
+
         Queue<String> q = new LinkedList<>();
+        q.add(beginWord);
+        Set<String> visited = new HashSet<>();
+        int lvl = 1;
         Set<String> dict = new HashSet<>();
         for (String s : wordList) {
             dict.add(s);
         }
-        if (!dict.contains(endWord)) {
-            return 0;
-        }
-        Set<String> visited = new HashSet<>();
-        q.add(beginWord);
-        int lvl = 1;
+
         while (!q.isEmpty()) {
-            int lvlnum = q.size();
-            for (int l = 0; l < lvlnum; l++) {
-                String ps = q.poll(); // hit
-                if (ps.equals(endWord)) {
+            int lvlsz = q.size();
+            for (int li = 0; li < lvlsz; li++) {
+                String word = q.poll();
+                if (word.equals(endWord)) {
                     return lvl;
                 }
-                for (int i = 0; i < ps.length(); i++) {
+                for (int ci = 0; ci < word.length(); ci++) {
                     for (char c = 'a'; c <= 'z'; c++) {
-                        char[] pc = ps.toCharArray();
-                        pc[i] = c;
-                        String nps = new String(pc);
-                        if (dict.contains(nps)) {
-                            if (!visited.contains(nps)) {
-                                q.add(nps);
-                                visited.add(nps);
-                            }
+                        char[] ch = word.toCharArray();
+                        ch[ci] = c;
+                        String newWord = new String(ch);
+                        if (!visited.contains(newWord) && dict.contains(newWord)) {
+                            q.add(newWord);
+                            visited.add(newWord);
                         }
                     }
                 }
             }
             lvl++;
         }
+
         return 0;
     }
 }

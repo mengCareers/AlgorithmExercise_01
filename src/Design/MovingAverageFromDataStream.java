@@ -9,7 +9,7 @@ import java.util.Queue;
 
 class MovingAverage {
     /*
-    keep track of sum of curr window, 
+    keep track of sum of curr window using Q
     then it will save a lot of work while getting moving sum
     */
     private static int sz;
