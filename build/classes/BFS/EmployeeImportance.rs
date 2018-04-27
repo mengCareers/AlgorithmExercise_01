@@ -1,2 +1,0 @@
-BFS.Employee
-BFS.EmployeeImportance

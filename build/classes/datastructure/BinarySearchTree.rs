@@ -1,3 +1,0 @@
-datastructure.BST
-datastructure.BSTNode
-datastructure.BinarySearchTree

@@ -27,7 +27,61 @@ public class GraphLec {
 //        g.DFS("A");
 //        boolean ans = g.isReachable("A", "G");
 //        List<List<String>> allRes = g.printAllPaths("A", "F");
-        g.isHamiltonianCycle();
+//        g.isHamiltonianCycle();
+        g.dfsSearch("A");
+    }
+
+    /*
+    A bipartite graph, also called a bigraph, 
+    is a set of graph vertices decomposed into two disjoint sets such that 
+    no two graph vertices within the same set are adjacent. 
+    i.e.
+    A Bipartite Graph is a graph whose vertices can be divided into two independent sets, U and V 
+    such that every edge (u, v) either connects a vertex from U to V or a vertex from V to U. 
+    In other words, for every edge (u, v), either u belongs to U and v to V, or u belongs to V and v to U. 
+    We can also say that there is no edge that connects vertices of same set.
+     */
+    final static int V = 4; // # of Vertices
+
+    public boolean isBigraph(int[][] G, int src) {
+        int[] colorArr = new int[V];
+        // colorArr[v] = -1, no color; colorArr[v] = 0 / 1 color
+        for (int i = 0; i < V; i++) {
+            colorArr[i] = -1;
+        }
+        colorArr[src] = 1;
+        Queue<Integer> q = new LinkedList<>();
+        q.add(src);
+        while (!q.isEmpty()) {
+            int u = q.poll();
+            if (G[u][u] == 1) {
+                return false;
+            }
+            for (int v = 0; v < V; v++) {
+                if (G[u][v] == 1 && colorArr[v] == -1) {
+                    colorArr[v] = 1 - colorArr[u];
+                    q.add(v);
+                } else if (G[u][v] == 1 && colorArr[v] == colorArr[u]) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    public void dfsSearch(String node) {
+        resetVisited();
+        dfs(nodes.get(node));
+    }
+
+    private void dfs(Node node) {
+        System.out.println(node.name);
+        node.visited = true;
+        for (String e : node.getNeighbours()) {
+            if (!nodes.get(e).visited) {
+                dfs(nodes.get(e));
+            }
+        }
     }
 
     List<String> resForHam = new ArrayList<>();
@@ -201,19 +255,19 @@ public class GraphLec {
         Node G = new Node("G");
         A.addEdge("B", 1);
         B.addEdge("C", 1);
-         B.addEdge("D", 1);
-        // B.addEdge("E", 1);
+        B.addEdge("D", 1);
+        B.addEdge("E", 1);
         C.addEdge("A", 1);
-        //D.addEdge("E", 1);
-        //E.addEdge("F", 1);
-        //G.addEdge("D", 0);
+        D.addEdge("E", 1);
+        E.addEdge("F", 1);
+        G.addEdge("D", 0);
         nodes.put("A", A);
         nodes.put("B", B);
         nodes.put("C", C);
         nodes.put("D", D);
-//        nodes.put("E", E);
-//        nodes.put("F", F);
-//        nodes.put("G", G);
+        nodes.put("E", E);
+        nodes.put("F", F);
+        nodes.put("G", G);
     }
 
     public void setStartNode(String startNode) {
