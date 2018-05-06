@@ -1,10 +1,5 @@
 package DynamicProgramming;
 
-
-import java.util.HashMap;
-import java.util.Map;
-import javafx.util.Pair;
-
 /* Q: 303. Range Sum Query - Immutable
 sumRange(i, j): find the sum of the elements between i and j inclusive
  * Thought Process:
@@ -22,25 +17,25 @@ Get:
                             Pair p2 = new Pair(3, 4)
                             p1 == p2 is true
  */
-
 /**
  *
  * @author xinrong
  */
 public class RangeSumQueryImmutable {
+
     private int[] sum;
-    
+
     public RangeSumQueryImmutable(int[] nums) {
         sum = new int[nums.length + 1];
         for (int i = 0; i < nums.length; i++) {
             sum[i + 1] = sum[i] + nums[i];
         }
     }
-    
+
     public int sumRange(int i, int j) {
         return sum[j + 1] - sum[i];
     }
-    
+
     /*
     Map<Pair<Integer, Integer>, Integer> map = new HashMap<>();
     
@@ -57,5 +52,5 @@ public class RangeSumQueryImmutable {
     public int sumRange(int i, int j) {
         return map.get(new Pair(i, j));
     }
-    */
+     */
 }

@@ -7,7 +7,7 @@ by swapping just two adjacent elements of the sequence.
  */
 package BruteForce;
 
-/** 
+/**
  *
  * @author xinrong
  */
@@ -46,11 +46,9 @@ public class JohonsonandTrotterPermutation {
         for (int i = 0; i < arr.length; i++) {
             if (arr[i].isLeft && i - 1 >= 0 && arr[i].val > arr[i - 1].val) {
                 arr[i].isMobile = true;
-            }
-            else if (!arr[i].isLeft && i + 1 < arr.length && arr[i].val > arr[i + 1].val) {
+            } else if (!arr[i].isLeft && i + 1 < arr.length && arr[i].val > arr[i + 1].val) {
                 arr[i].isMobile = true;
-            }
-            else {
+            } else {
                 arr[i].isMobile = false;
             }
         }

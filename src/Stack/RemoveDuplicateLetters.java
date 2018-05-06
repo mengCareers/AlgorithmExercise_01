@@ -1,6 +1,11 @@
 /* 316. Remove Duplicate Letters
-If ($ < #) and (# appears again after $) => we remove #.
+Q : Given a string which contains only lowercase letters, remove duplicate letters so that every letter appear once and only once. You must make sure your result is the smallest in lexicographical order among all possible results.
  * Thought Process:
+With the help of stack, for each char ch in s : 
+If stack contains ch => continue
+while ( ch < peek) and  ( peak appears again after ch ) => pop
+push ch to stack
+
  * 
  */
 package Stack;
@@ -19,29 +24,29 @@ public class RemoveDuplicateLetters {
     }
 
     public static String removeDuplicateLetters(String s) {
-        if (s == null || s.length() <= 1) {
+        if (s == null || s.length() == 0) {
             return s;
         }
-        Stack<Character> stack = new Stack<>();
-        int[] freq = new int[256];
+        int[] freq = new int[26];
         for (char c : s.toCharArray()) {
-            freq[c]++;
+            freq[c - 'a']++;
         }
+        Stack<Character> stack = new Stack<>();
         stack.push(s.charAt(0));
-        freq[s.charAt(0)]--;
+        --freq[s.charAt(0) - 'a'];
         for (int i = 1; i < s.length(); i++) {
-            char c = s.charAt(i);
-            freq[c]--;
-            if (stack.contains(c)) {
+            char ch = s.charAt(i);
+            --freq[ch - 'a'];
+            if (stack.contains(ch)) {
                 continue;
             }
-            while (!stack.isEmpty() && stack.peek() > c && freq[stack.peek()] > 0) {
+            while (!stack.isEmpty() && freq[stack.peek() - 'a'] > 0 && ch < stack.peek()) {
                 stack.pop();
             }
-            stack.push(c);
+            stack.push(ch);
         }
         StringBuilder sb = new StringBuilder();
-        while (!stack.empty()) {
+        while (!stack.isEmpty()) {
             sb.append(stack.pop());
         }
         return sb.reverse().toString();

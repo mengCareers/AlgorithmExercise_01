@@ -1,0 +1,2 @@
+LinkedList.Node
+LinkedList.ReplaceElebyNextGreatestEle

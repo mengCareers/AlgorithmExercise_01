@@ -19,32 +19,36 @@ import java.util.Stack;
 public class ValidParenthesisString {
 
     public boolean checkValidString(String s) {
-        Stack<Integer> leftIndices = new Stack<>();
-        Stack<Integer> starIndices = new Stack<>();
+        Stack<Integer> leftStack = new Stack<>();
+        Stack<Integer> starStack = new Stack<>();
         for (int i = 0; i < s.length(); i++) {
             switch (s.charAt(i)) {
                 case '(':
-                    leftIndices.push(i);
+                    leftStack.push(i);
                     break;
                 case ')':
-                    if (!leftIndices.empty()) {
-                        leftIndices.pop();
-                    } else if (!starIndices.empty()) {
-                        starIndices.pop();
+                    if (!leftStack.isEmpty()) {
+                        leftStack.pop();
+                    } else if (!starStack.isEmpty()) {
+                        starStack.pop();
                     } else {
                         return false;
                     }
                     break;
                 default:
-                    starIndices.push(i);
+                    starStack.push(i);
                     break;
             }
         }
-        while (!leftIndices.empty()) {
-            int lefti = leftIndices.pop();
-            if (starIndices.empty() || starIndices.pop() < lefti) {
+        while (!leftStack.isEmpty() && !starStack.isEmpty()) {
+            int li = leftStack.pop();
+            int si = starStack.pop();
+            if (si < li) {
                 return false;
             }
+        }
+        if (!leftStack.isEmpty()) {
+            return false;
         }
         return true;
     }

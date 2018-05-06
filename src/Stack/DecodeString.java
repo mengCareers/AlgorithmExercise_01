@@ -3,6 +3,10 @@ s = "3[a2[c]]", return "accaccacc".
  * Thought Process:
 if [, push
 if ], pop
+cntStack    3   2 
+strStack    
+str         acc
+accaccacc
  * 
  */
 package Stack;
@@ -14,6 +18,12 @@ import java.util.Stack;
  * @author xinrong
  */
 public class DecodeString {
+    public static void main(String[] args) {
+        DecodeString inst = new DecodeString();
+        String res = inst.decodeString("3[a]");
+        System.out.println(res);
+    }
+    
     public String decodeString(String s) {
         Stack<Integer> cntstack = new Stack<>();
         Stack<String> strstack = new Stack<>();

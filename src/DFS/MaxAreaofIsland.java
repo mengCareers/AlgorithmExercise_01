@@ -12,6 +12,12 @@ package DFS;
  */
 public class MaxAreaofIsland {
 
+    public static void main(String[] args) {
+        int[][] grid = {{1, 0, 0}, {1, 0, 1}, {1, 1, 0}};
+        int maxArea = new MaxAreaofIsland().maxAreaOfIsland(grid);
+        System.out.println(maxArea);
+    }
+
     public int maxAreaOfIsland(int[][] grid) {
         if (grid == null || grid.length == 0) {
             return 0;
@@ -33,6 +39,7 @@ public class MaxAreaofIsland {
         if (x < 0 || x >= grid.length || y < 0 || y >= grid[0].length || grid[x][y] != 1) {
             return 0;
         }
+
         grid[x][y] = 0;
 
         return 1 + dfs(x, y + 1, grid)

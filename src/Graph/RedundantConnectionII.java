@@ -60,7 +60,7 @@ public class RedundantConnectionII {
             return new int[]{cyclePath.get(cyclePath.size() - 2), cyclePath.get(cyclePath.size() - 1)};
         }
 
-        // with cyclic issue and wo-parents issue
+        // with cyclic issue and two-parents issue
         if (cyclePath != null) {
             int cycleStartPoint = cyclePath.get(cyclePath.size() - 1);
             while (cyclePath.get(0) != cycleStartPoint) {

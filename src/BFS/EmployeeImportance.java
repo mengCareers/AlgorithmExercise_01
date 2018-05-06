@@ -5,8 +5,7 @@ output: employee id 's total importance value
 v : employee
 e : importance
  * Get :
-list can only get element by idx
-we can help search with a map
+list can only get element by idx, we can help search with a map
  */
 package BFS;
 
@@ -39,7 +38,6 @@ public class EmployeeImportance {
             for (int s : e.subordinates) {
                 pending.add(s);
             }
-
         }
         return res;
     }
@@ -54,4 +52,5 @@ class Employee {
     public int importance;
     // the id of direct subordinates
     public List<Integer> subordinates;
+    
 };

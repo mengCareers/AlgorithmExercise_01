@@ -9,6 +9,7 @@ package String;
  * @author xinrong
  */
 public class KMP {
+
     public static void main(String[] args) {
         String s = "dabcdzadz";
         String p = "dzb";
@@ -47,17 +48,15 @@ public class KMP {
         int[] next = buildNext(p);
         int pi = 0, si = 0;
         while (si < s.length() && pi < p.length()) {
-            if (pi == -1 || s.charAt(si) == p.charAt(pi)) 
-            {
+            if (pi == -1 || s.charAt(si) == p.charAt(pi)) {
                 si++;
                 pi++;
             } else {
-                pi = next[pi];  
+                pi = next[pi];
             }
         }
 
-        if (pi == p.length()) 
-        {
+        if (pi == p.length()) {
             return si - pi;
         }
 

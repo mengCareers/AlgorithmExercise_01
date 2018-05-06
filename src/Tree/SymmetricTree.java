@@ -8,7 +8,7 @@ For example, this binary tree [1,2,2,3,4,4,3] is symmetric:
  / \ / \
 3  4 4  3
  * Thought Process:
-if root is symmetric <- issymutil(root.left, root.right)
+each mirror position pair val equal -> symetric
  * 
  */
 package Tree;
@@ -18,15 +18,15 @@ package Tree;
  * @author xinrong
  */
 public class SymmetricTree {
-
+    
     public boolean isSymmetric(TreeNode root) {
         if (root == null) {
             return true;
         }
-        return issymutil(root.left, root.right);
+        return isMirrorValid(root.left, root.right);
     }
 
-    private boolean issymutil(TreeNode ln, TreeNode rn) {
+    private boolean isMirrorValid(TreeNode ln, TreeNode rn) {
         if (ln == null && rn == null) {
             return true;
         }
@@ -36,6 +36,6 @@ public class SymmetricTree {
         if (ln.val != rn.val) {
             return false;
         }
-        return issymutil(ln.left, rn.right) && issymutil(ln.right, rn.left);
+        return isMirrorValid(ln.left, rn.right) && isMirrorValid(ln.right, rn.left);
     }
 }
