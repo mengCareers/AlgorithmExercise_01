@@ -9,9 +9,12 @@ Output: ["(1, 23)", "(12, 3)", "(1.2, 3)", "(1, 2.3)"]
  * When can't we add ','
  after 0
  * When can we add '.'
+ * Get :
+We split the whole String by "," (its position represented by split) into left, right, and add "." to each part by the utility method addPeriod().
  */
 package String;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -20,16 +23,27 @@ import java.util.List;
  */
 public class AmbiguousCoordinates {
 
-    public List<String> ambiguousCoordinates(String S) {
-        
+    public List<String> ambiguousCoordinates(String s) {
+        List<String> result = new ArrayList<>();
+        for (int split = 2; split < s.length() - 1; split++) {
+            for (String left : addPeriod(s, 1, split)) {
+                for (String right : addPeriod(s, split, s.length() - 1)) {
+                    result.add("(" + left + ", " + right + ")");
+                }
+            }
+        }
+        return result;
     }
-    
-    private void util(String s, String prefix, int i, ) {
-        // , . ' ' next
-        // for nums[i]              e.g. (..4)5
-        // concatenate to prefix            45
-        // , nums[i]                        4,5
-        // . nums[i]                        4.5
-        
+
+    private List<String> addPeriod(String s, int i, int j) {
+        List<String> result = new ArrayList<>();
+        for (int d = 1; i + d <= j; d++) {
+            String left = s.substring(i, i + d);
+            String right = s.substring(i + d, j);
+            if ((!left.startsWith("0") || left.equals("0")) && !right.endsWith("0")) {
+                result.add(left + (i + d < j ? "." : "") + right);
+            }
+        }
+        return result;
     }
 }
