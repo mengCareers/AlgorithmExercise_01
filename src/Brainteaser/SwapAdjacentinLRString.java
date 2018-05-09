@@ -21,7 +21,7 @@ if (start[i] = 'L' and i < j || start[i] = 'R' and i > j)
     not accessible
  * 
  */
-package MinimaxMaximin;
+package Brainteaser;
 
 /**
  *

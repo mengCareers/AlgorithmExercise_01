@@ -18,6 +18,41 @@ import java.util.Set;
  */
 public class FixTree {
 
+    public static void main(String[] args) {
+        TreeNode root = new TreeNode(5);
+        root.left = new TreeNode(5);
+        root.right = new TreeNode(5);
+        root.left.right = root.right.left = new TreeNode(6);
+
+        printTree(root);
+        fixTree(root);
+        System.out.println();
+        System.out.println("After Fix: ");
+        printTree(root);
+        System.out.println();
+
+        if (root.left.right != null) {
+            System.out.println("1 : Kept, " + root.left.right.val);
+        } else {
+            System.out.println("1 : Fixed");
+        }
+
+        if (root.right.left != null) {
+            System.out.println("2 : Kept, " + root.right.left.val);
+        } else {
+            System.out.println("2 : Fixed");
+        }
+    }
+
+    private static void printTree(TreeNode root) {
+        if (root == null) {
+            return;
+        }
+        printTree(root.left);
+        System.out.print(root.val + " ");
+        printTree(root.right);
+    }
+
     public static void fixTree(TreeNode root) {
         //fixTreeHelper(root);
         fixTreeHelper(root, null);
