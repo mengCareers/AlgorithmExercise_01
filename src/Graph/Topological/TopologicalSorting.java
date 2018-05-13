@@ -21,7 +21,7 @@ Then how to find indegree of each node?
   for node in Nodes, if (list[node].size != 0)
                                     for each dest in list indegree[dest]++;
  */
-package Graph;
+package Graph.Topological;
 
 import java.util.ArrayList;
 import java.util.LinkedList;

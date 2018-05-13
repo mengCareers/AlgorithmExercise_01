@@ -29,7 +29,7 @@ public class ReservoirSampling {
             reservoir[i] = stream[i];
         }
         Random rand = new Random();
-
+        
         while (i < stream.length) {
             int j = rand.nextInt(i + 1);
             if (j < k) {
