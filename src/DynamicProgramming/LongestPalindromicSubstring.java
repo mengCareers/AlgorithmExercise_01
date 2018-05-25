@@ -1,9 +1,4 @@
 /* 5. Longest Palindromic Substring
-Given a string s, find the longest palindromic substring in s. 
-You may assume that the maximum length of s is 1000.
- * Thought Process:
-区间dp
-s[i][j] true if s[i + 1][j - 1] true and Ai = Aj
  * 
  */
 package DynamicProgramming;
@@ -14,25 +9,34 @@ package DynamicProgramming;
  */
 public class LongestPalindromicSubstring {
 
-    public static void main(String[] args) {
-        String ans = longestPalindrome("b");
-        System.out.println(ans);
-    }
-
-    public static String longestPalindrome(String s) {
+    public String longestPalindrome(String s) {
+        int li = 0, ri = 0;
+        int maxLen = 0;
+        String longestPalindrome = "";
         boolean[][] dp = new boolean[s.length()][s.length()];
-        String res = "";
-        for (int l = 0; l < s.length(); l++) {
-            for (int i = 0; i + l < s.length(); i++) {
+        for (int i = 0; i < dp.length; i++) {
+            dp[i][i] = true;
+        }
+        for (int i = s.length() - 1; i >= 0; i--) {
+            for (int l = 1; l + i <= s.length() - 1; l++) {
                 int j = i + l;
-                if (s.charAt(i) == s.charAt(j) && (j - i < 3 || dp[i + 1][j - 1])) {
-                    dp[i][j] = true;
+                if (l == 1) {
+                    dp[i][j] = s.charAt(i) == s.charAt(j);
+                    if (dp[i][j] && maxLen < j - i + 1) {
+                        li = i;
+                        ri = j;
+                        maxLen = j - i + 1;
+                    }
+                    continue;
                 }
-                if (dp[i][j] && (j - i + 1 > res.length())) {
-                    res = s.substring(i, j + 1);
+                dp[i][j] = (dp[i + 1][j - 1]) && (s.charAt(i) == s.charAt(j));
+                if (dp[i][j] && maxLen < j - i + 1) {
+                    li = i;
+                    ri = j;
+                    maxLen = j - i + 1;
                 }
             }
         }
-        return res;
+        return s.substring(li, ri + 1);
     }
 }
