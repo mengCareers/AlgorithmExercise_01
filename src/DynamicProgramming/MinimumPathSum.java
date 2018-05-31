@@ -60,38 +60,41 @@ dp[i] = grid[r - 1][i - 1] + Math.min(dp【i】, dp[i - 1]);
         return memo[i][j];
     }
 
-    public int minPathSumDP(int[][] grid) {
-        int[][] dp = new int[grid.length + 1][grid[0].length + 1];
-        for (int j = 0; j < dp[0].length; j++) {
-            dp[0][j] = Integer.MAX_VALUE;
-        }
-        for (int i = 1; i < dp.length; i++) {
+    public int minPathSum_02(int[][] grid) {
+        int m = grid.length, n = grid[0].length;
+        int[][] dp = new int[m + 1][n + 1];
+        for (int i = 1; i <= m; i++) {
             dp[i][0] = Integer.MAX_VALUE;
         }
-        for (int i = 1; i < dp.length; i++) {
-            for (int j = 1; j < dp[0].length; j++) {
+        for (int j = 1; j <= n; j++) {
+            dp[0][j] = Integer.MAX_VALUE;
+        }
+
+        for (int i = 1; i <= m; i++) {
+            for (int j = 1; j <= n; j++) {
                 if (i == 1 && j == 1) {
-                    dp[i][j] = grid[0][0];
+                    dp[i][j] = grid[i - 1][j - 1];
                     continue;
                 }
-                dp[i][j] = grid[i - 1][j - 1] + Math.min(dp[i - 1][j], dp[i][j - 1]);
+                dp[i][j] = Math.min(dp[i - 1][j], dp[i][j - 1]) + grid[i - 1][j - 1];
             }
         }
-        return dp[dp.length - 1][dp[0].length - 1];
+        return dp[m][n];
     }
 
-    public int minPathSumDP_One(int[][] grid) {
-        int[] dp = new int[grid[0].length + 1];
+    public int minPathSum_03(int[][] grid) {
+        int m = grid.length, n = grid[0].length;
+        int[] dp = new int[n + 1];
         Arrays.fill(dp, Integer.MAX_VALUE);
-        for (int r = 1; r < grid.length + 1; r++) {
-            for (int i = 1; i < dp.length; i++) {
-                if (i == 1 && r == 1) {
-                    dp[i] = grid[r - 1][i - 1];
+        for (int i = 1; i <= m; i++) {
+            for (int j = 1; j <= n; j++) {
+                if (i == 1 && j == 1) {
+                    dp[j] = grid[i - 1][j - 1];
                     continue;
                 }
-                dp[i] = grid[r - 1][i - 1] + Math.min(dp[i], dp[i - 1]);
+                dp[j] = Math.min(dp[j], dp[j - 1]) + grid[i - 1][j - 1];
             }
         }
-        return dp[dp.length - 1];
+        return dp[n];
     }
 }
