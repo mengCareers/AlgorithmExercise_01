@@ -15,7 +15,8 @@ public class BinaryIndexedTree {
     int[] e;
 
     public BinaryIndexedTree(int sz) {
-        e = new int[sz + 1]; // plus 1 for e[0] 没法算 rightmostOne(0)
+        e = new int[sz + 1]; // plus 1 for e[0] should equal to 0 but rightmostOne(0) != 0
+                             //            rightmostOne(1) = 0 so e[1] will promise to be 0, so we set 1 as start
     }
 
     /**
@@ -26,7 +27,7 @@ public class BinaryIndexedTree {
      * @return 
      */
     private static int rightmostOne(int num) {
-        return num & (-num);
+        return num & (~num + 1);
     }
 
     /**
