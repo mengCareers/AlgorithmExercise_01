@@ -88,8 +88,7 @@ public class QuickSort {
                 swap(arr, i, wall);
             }
         }
-        swap(arr, hi, wall + 1);    
-        
+        swap(arr, hi, wall + 1);            
         return wall + 1;
     }
     

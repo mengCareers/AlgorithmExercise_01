@@ -36,7 +36,7 @@ public class BinaryIndexedTree {
      * @param i
      * @return 
      */
-    public int rangeSum(int i) {
+    public int rangeSumFromStart(int i) {
         int sum = 0;
         while (i > 0) {
             sum += e[i];
@@ -46,7 +46,7 @@ public class BinaryIndexedTree {
     }
 
     public int rangeSum(int s, int e) {
-        return rangeSum(e) - rangeSum(s - 1);
+        return rangeSumFromStart(e) - rangeSumFromStart(s - 1);
     }
 
     /**
