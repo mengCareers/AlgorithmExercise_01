@@ -1,13 +1,9 @@
 /* 667. Beautiful Arrangement II
-*boolean flag* : 
-true if k is even initially, if k is even, we start from E.
-also used as swithch flag to indicate it is either S's turn or  E's turn
-*int cntK* :
-times of execution in switch pattern
-if k != n-1, we do switch pattern k times only, then list the left values increasingly
- * Thought Process:
- * 
- */
+INPUT: n, k
+OUTPUT: int[]
+GOAL: construct a list which contains [1, n] and is beautiful : 
+                                                      -> [|a1 - a2|, |a2 - a3|, |a3 - a4|, ... , |an-1 - an|] has exactly k distinct integers
+*/
 package TwoPtrs;
 
 /**
@@ -22,6 +18,32 @@ public class BeautifulArrangementII {
             System.out.print(i + " ");
         }
         System.out.println();
+    }
+    
+    public int[] constructArray_v1(int n, int k) {
+        
+        int s = 1, e = n, ri = 0;
+        int cntK = k;
+        int[] result = new int[n];
+        boolean isSTurn = k % 2 != 0;
+       
+        while (cntK > 0) {         
+            if (isSTurn) {
+                result[ri++] = s;   
+                s++;
+            }
+            else {
+                result[ri++] = e;     
+                e--;
+            }
+            isSTurn = !isSTurn;
+            cntK--;
+        }
+        for (int val = s; val <= e; val++) {
+            result[ri++] = val;
+        }
+        
+        return result;
     }
 
     public static int[] constructArray(int n, int k) {
