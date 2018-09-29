@@ -1,6 +1,5 @@
 /*
 树状数组
-于数据压缩的。 现在它常常被用于存储频率及操作累积频率表
  * Thought Process:
  * 
  */
@@ -23,7 +22,7 @@ public class BinaryIndexedTree {
      * rightmostOne(4) = 4
      * rightmostOne(6) = 2
      * rightmostOne(7) = 1
-     * @param ind
+     * @param 
      * @return 
      */
     private static int rightmostOne(int num) {
