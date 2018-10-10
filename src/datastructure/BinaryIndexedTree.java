@@ -11,93 +11,41 @@ package datastructure;
  */
 public class BinaryIndexedTree {
 
-    int[] e;
+    private static int[] e;
+    private static int[] nums;
 
-    public BinaryIndexedTree(int sz) {
-        e = new int[sz + 1]; // plus 1 for e[0] should equal to 0 but rightmostOne(0) != 0
-                             //            rightmostOne(1) = 0 so e[1] will promise to be 0, so we set 1 as start
+    public BinaryIndexedTree(int[] nums) {
+        e = new int[nums.length + 1];
+        this.nums = nums;
+        buildBIT();
     }
 
-    /**
-     * rightmostOne(4) = 4
-     * rightmostOne(6) = 2
-     * rightmostOne(7) = 1
-     * @param 
-     * @return 
-     */
-    private static int rightmostOne(int num) {
-        return num & (~num + 1);
+    public int rangeSumFromTo(int start, int end) {
+        return rangeSumFromStart(end) - rangeSumFromStart(start - 1);
     }
 
-    /**
-     * if i = 7
-     * sum = e[7] + e[6] + e[4]       
-     * @param i
-     * @return 
-     */
-    public int rangeSumFromStart(int i) {
+    private void buildBIT() {
+        for (int i = 0; i < nums.length; i++)
+            updateBIT(i + 1, nums[i]);
+    }
+
+    private static int rightmostOneUtility(int num) {
+        return num & (~(num - 1));
+    }
+
+    private int rangeSumFromStart(int i) {
         int sum = 0;
         while (i > 0) {
             sum += e[i];
-            i = i - rightmostOne(i);
+            i = i - rightmostOneUtility(i);
         }
         return sum;
     }
 
-    public int rangeSum(int s, int e) {
-        return rangeSumFromStart(e) - rangeSumFromStart(s - 1);
-    }
-
-    /**
-     * a[i] += v
-     * 则对e[i]及后续坐标有影响
-     * @param i
-     * @param v 
-     */
-    public void update(int i, int v) {
+    private void updateBIT(int i, int value) {
         while (i < e.length) {
-            e[i] += v;
-            i = i + rightmostOne(i);
+            e[i] += value;
+            i = i + rightmostOneUtility(i);
         }
-    }
-
-    public static void main(String[] args) {
-        int sz = 10;
-        BinaryIndexedTree inst = new BinaryIndexedTree(sz);
-        System.out.println("Init : ");
-        for (int i = 1; i <= sz; i++) {
-            System.out.print(inst.rangeSum(i, i) + " ");
-        }
-        System.out.println();
-        // set
-        System.out.println("--Set : ");
-        for (int i = 1; i <= sz; i++) {
-            inst.update(i, i + 1);
-        }
-        for (int i = 1; i <= sz; i++) {
-            System.out.print(inst.rangeSum(i, i) + " ");
-        }
-        System.out.println();
-        for (int i = 1; i <= sz; i++) {
-            System.out.print(inst.e[i] + " ");
-        }
-        System.out.println();
-        // range sum
-        System.out.println("--Range Sum : ");
-        System.out.printf("from %d nd to %d nd = %d%n", 2, 4, inst.rangeSum(2, 4));
-        // update
-        System.out.println("--Update : ");
-        inst.update(2, 5);
-        for (int i = 1; i <= sz; i++) {
-            System.out.print(inst.rangeSum(i, i) + " ");
-        }
-        System.out.println();
-        for (int i = 1; i <= sz; i++) {
-            System.out.print(inst.e[i] + " ");
-        }
-        System.out.println();
-        // range sum
-        System.out.println("--Range Sum : ");
-        System.out.printf("from %d nd to %d nd = %d%n", 2, 4, inst.rangeSum(2, 4));
     }
 }
